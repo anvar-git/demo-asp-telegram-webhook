@@ -31,10 +31,24 @@ namespace demo_app2.Controllers
                 return Ok();
 
             if (update.Message!.Type != MessageType.Text)
-                return Ok(); ;
-
+                return Ok();
+            
             var chatId = update.Message.Chat.Id;
+            
+            var result = await _localStorage.GetAsync<string>("userLastMessage");
+            if (result.Success)
+            {
+                Message sentMessage2 = await _telegramBotClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "Your last value" + result.Value,
+                    parseMode: ParseMode.Markdown
+                );
+            }
+
             var messageText = update.Message.Text;
+
+            await _localStorage.SetAsync("userLastMessage", messageText);
+            
             messageText = messageText ?? "no text";
             Message sentMessage = await _telegramBotClient.SendTextMessageAsync(
                 chatId: chatId,
