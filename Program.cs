@@ -6,6 +6,7 @@ builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, relo
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddSingleton<TelegramBot>();
+builder.Services.AddSingleton<ProtectedLocalStorage>();
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
