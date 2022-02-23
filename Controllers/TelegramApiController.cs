@@ -11,11 +11,13 @@ namespace demo_app2.Controllers
     {
         private readonly TelegramBotClient _telegramBotClient;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ProtectedLocalStorage _localStorage;
 
-        public TelegramBotController(TelegramBot telegramBot, IHttpClientFactory httpClientFactory)
+        public TelegramBotController(TelegramBot telegramBot, IHttpClientFactory httpClientFactory, ProtectedLocalStorage localStorage)
         {
             _telegramBotClient = telegramBot.GetBot().Result;
             _httpClientFactory = httpClientFactory;
+            _localStorage = localStorage;
         }
 
         [HttpGet]
